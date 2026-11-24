@@ -1,0 +1,89 @@
+/* Agrismart design tokens. Colours are checked for WCAG AA where text sits on them. */
+:root {
+  /* Brand greens. Primary #247D43 and deep #174C30 are the brand colours. */
+  --brand-900: #10351f;
+  --brand-800: #174c30; /* deep green: headings, footer; white text 10.4:1 */
+  --brand-700: #247d43; /* primary green: buttons, links; white text 5.1:1 */
+  --brand-600: #2c8f4f; /* hover tint on dark surfaces only */
+  --brand-500: #4caf6e; /* decorative only */
+  --brand-100: #d4ebda;
+  --brand-50: #eaf5ec; /* pale green */
+
+  /* Accent: harvest gold, used sparingly (badges, small highlights; dark text on it) */
+  --accent-500: #c98a12;
+  --accent-400: #e9b949;
+  --accent-100: #fbf1d8;
+
+  /* Neutrals: dark charcoal text on white and light neutral surfaces */
+  --ink: #1d2420; /* 15.9:1 on white */
+  --ink-2: #39423c;
+  --muted: #59635c; /* 6.2:1 on white, 5.7:1 on #f5f7f5 */
+  --border: #dfe5e0;
+  --border-strong: #c9d3cb;
+  --bg: #ffffff;
+  --bg-soft: #f5f7f5; /* light neutral */
+  --sand: #f5f7f5;
+  --surface: #ffffff;
+  --leaf-50: #eaf5ec; /* pale green sections */
+  --leaf-100: #d4ebda;
+  --on-dark: #eef6f0;
+  --on-dark-muted: #bdd3c3;
+
+  --danger: #b42318;
+  --danger-bg: #fdecea;
+  --warning-bg: #fff6df;
+  --info-bg: #eaf2fb;
+  --success-bg: #e6f4ea;
+
+  --focus: var(--brand-800);
+
+  /* Type */
+  --font: 'Plus Jakarta Sans Variable', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', Arial, sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-h3: 1.2rem;
+  --fs-h2: clamp(1.75rem, 1.25rem + 1.6vw, 2.6rem);
+  --fs-h1: clamp(2.3rem, 1.4rem + 3.4vw, 4.25rem);
+  --lh-body: 1.65;
+
+  /* Shape & depth */
+  /* Restrained corners: corporate, not bubbly */
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --shadow-sm: 0 1px 2px rgba(23, 76, 48, 0.06), 0 1px 6px rgba(23, 76, 48, 0.04);
+  --shadow-md: 0 8px 24px rgba(23, 76, 48, 0.08);
+  --shadow-lg: 0 18px 40px rgba(23, 76, 48, 0.12);
+  --shadow-menu: 0 24px 56px rgba(23, 76, 48, 0.14);
+
+  /* Spacing */
+  --space-section: clamp(4rem, 2.25rem + 5.5vw, 7.5rem);
+  --gutter: 16px;
+
+  /* Motion: one easing family and three durations everywhere */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur: 260ms;
+  --dur-slow: 650ms;
+
+  /* Layout */
+  --utility-h: 40px;
+  --header-h: 88px;
+
+  color-scheme: light;
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 24px;
+  }
+}
+
+/*
+ * The brand uses a light agricultural theme everywhere (white backgrounds, pale-green sections).
+ * There is intentionally no dark-mode palette: the official logo has a white background and must
+ * always appear on white or very light surfaces.
+ */

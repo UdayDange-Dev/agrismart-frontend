@@ -1,0 +1,17 @@
+/*
+ * Agrismart design system entry point.
+ * tokens   - colours, type scale, radii, shadows, motion timings
+ * base     - reset, typography, buttons, links, forms, notices, tables
+ * header   - utility bar, sticky header, dropdowns, mega menu, search, mobile drawer
+ * home     - hero and homepage sections
+ * catalog  - product cards, skeletons, catalogue, cart, checkout, account pages
+ * footer   - site footer
+ * motion   - keyframes, scroll reveals and reduced-motion overrides (last, so it wins)
+ */
+@import './tokens.css';
+@import './base.css';
+@import './header.css';
+@import './home.css';
+@import './catalog.css';
+@import './footer.css';
+@import './motion.css';

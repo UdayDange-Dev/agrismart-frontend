@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Environment files: only the example is committed (VITE_* values are public anyway,
+# but local overrides do not belong in Git)
+.env
+.env.*
+!.env.example
+
+# Keys and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Build output (never commit source maps)
+dist/
+coverage/
+*.tsbuildinfo
+*.map
+
+# Vercel CLI local state (may hold pulled environment variables)
+.vercel/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Playwright output (traces and screenshots can contain test account data)
+playwright-report/
+test-results/
+blob-report/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Test tool caches
+.vitest/

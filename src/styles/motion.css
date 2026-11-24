@@ -1,0 +1,101 @@
+/* Shared keyframes and scroll reveals. Only opacity/transform are animated (no layout shift). */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Hero text entrance, staggered with --d */
+.anim-rise {
+  opacity: 0;
+  animation: rise 800ms var(--ease) var(--d, 0ms) forwards;
+}
+
+/* Scroll-triggered reveal (see components/Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 700ms var(--ease) var(--reveal-delay, 0ms),
+    transform 700ms var(--ease) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Respect the user's motion preference: no entrance, parallax, zoom or shimmer movement. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .anim-rise,
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero__media {
+    transform: none !important;
+  }
+
+  /* No slow photo zoom on the hero and page headers */
+  .hero__media img,
+  .page-hero__bg {
+    animation: none !important;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}
