@@ -47,10 +47,12 @@ E2E_BACKEND_DIR=../Agrismart-Backend npm run test:e2e
 
 Nothing here deploys automatically. Steps for a person with access to the Vercel account:
 
-1. Deploy the backend first (backend README) and note its URL, e.g.
-   `https://agrismart-backend.onrender.com`.
-2. Set `routes[0].dest` in `vercel.json` to `https://<your-service>.onrender.com/api/$1` if the
-   service name differs. Commit the change.
+1. Deploy the backend first (backend README). The deployed backend is
+   `https://agrismart-backend-zvxz.onrender.com`.
+2. `routes[0].dest` in `vercel.json` is `https://agrismart-backend-zvxz.onrender.com/api/$1`. If
+   the backend ever moves, change it there and in `src/test/deployment.test.ts`, then commit. The
+   build fails if `dest` is not https, drops the `/api/$1` path or the origin-secret transform, or
+   names a placeholder host such as `agrismart-backend.onrender.com`, which is not our service.
 3. Push this repository to GitHub, then in Vercel choose **Add New > Project**, import it, keep
    framework **Vite**, build `npm run build`, output `dist`.
 4. Under **Settings > Environment Variables**, add:
@@ -71,7 +73,7 @@ These depend on Vercel's handling of external rewrites, which can't be tested lo
 - Search and page through products (`/products?q=…&page=2`). This proves query strings are
   forwarded.
 - Check that product images load (`/api/products/<code>/image`).
-- `curl -i https://<service>.onrender.com/api/products` must return **403**. Only the health
+- `curl -i https://agrismart-backend-zvxz.onrender.com/api/products` must return **403**. Only the health
   endpoints answer directly.
 - In DevTools, the response headers on `/` must include the CSP and HSTS. API responses must not
   show `x-vercel-cache: HIT` for `/api/customer/*`.

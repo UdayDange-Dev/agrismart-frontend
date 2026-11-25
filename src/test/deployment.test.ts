@@ -35,6 +35,13 @@ describe('vercel.json', () => {
     expect(dest.username + dest.password + dest.search).toBe('');
   });
 
+  it('targets the deployed Render backend, never the documentation placeholder', () => {
+    const host = new URL(api!.dest.replace('$1', 'x')).hostname;
+    // Update deliberately (with the README) if the backend service ever moves.
+    expect(host).toBe('agrismart-backend-zvxz.onrender.com');
+    expect(host).not.toBe('agrismart-backend.onrender.com');
+  });
+
   it('sets the origin-gate header from a server-side env var (replacing any client value)', () => {
     const t = api!.transforms?.find((x) => x.target.key === 'x-agrismart-origin-secret');
     expect(t).toMatchObject({ type: 'request.headers', op: 'set', args: '$ORIGIN_SECRET', env: ['ORIGIN_SECRET'] });

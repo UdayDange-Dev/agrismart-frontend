@@ -38,7 +38,45 @@ function productionHeaders(): Record<string, string> {
   return headers;
 }
 
+/**
+ * Hostnames that must never be the /api proxy target. agrismart-backend.onrender.com was a
+ * documentation placeholder, not our service: proxying to it sent visitors' API requests (and the
+ * origin-secret header) to a host we do not control.
+ */
+const FORBIDDEN_PROXY_HOSTS = new Set(['agrismart-backend.onrender.com', 'example.com', 'localhost', '127.0.0.1']);
+
+/**
+ * Fails every build (Vercel runs `npm run build`) unless vercel.json proxies /api/* over https to
+ * a real backend host, keeping the path and the server-side origin-secret header transform.
+ */
+function checkProxyTarget(): void {
+  const file = fileURLToPath(new URL('./vercel.json', import.meta.url));
+  const config = JSON.parse(readFileSync(file, 'utf8')) as {
+    routes?: { src: string; dest: string; transforms?: { op: string; target: { key: string }; args: string }[] }[];
+  };
+  const routes = (config.routes ?? []).filter((r) => r.src === '/api/(.*)');
+  const fail = (why: string) => {
+    throw new Error(`vercel.json /api proxy: ${why}`);
+  };
+  if (routes.length !== 1) fail('expected exactly one route with src "/api/(.*)"');
+  const route = routes[0]!;
+  let dest: URL;
+  try {
+    dest = new URL(route.dest.replace('$1', 'x'));
+  } catch {
+    return fail('dest is not a valid URL');
+  }
+  if (dest.protocol !== 'https:') fail('dest must use https');
+  if (FORBIDDEN_PROXY_HOSTS.has(dest.hostname) || dest.hostname.endsWith('.example.com')) {
+    fail(`dest host ${dest.hostname} is a placeholder, not the deployed backend`);
+  }
+  if (dest.pathname !== '/api/x' || dest.search || dest.username || dest.password) fail('dest must be https://<backend-host>/api/$1');
+  const secret = route.transforms?.find((t) => t.target.key === 'x-agrismart-origin-secret');
+  if (secret?.op !== 'set' || secret.args !== '$ORIGIN_SECRET') fail('the origin-secret header transform is missing');
+}
+
 export default defineConfig(({ mode }) => {
+  checkProxyTarget();
   const base = apiBase(mode);
   return {
     plugins: [react()],

@@ -7,7 +7,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "https://agrismart-backend.onrender.com/api/$1",
+      "dest": "https://agrismart-backend-zvxz.onrender.com/api/$1",
       "headers": { "x-vercel-enable-rewrite-caching": "0" },
       "transforms": [
         {
